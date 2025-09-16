@@ -21,8 +21,8 @@ function createPlayer(name, marker) {
     };
 }
 
-const player1 = createPlayer('player1', 'X');
-const player2 = createPlayer('player2', 'O');
+const player1 = createPlayer('player X', 'X');
+const player2 = createPlayer('player O', 'O');
 
 const gameFlow = (function () {
     let currentPlayer = player1;
@@ -48,16 +48,16 @@ const gameFlow = (function () {
         for (let condition of winConditions) {
             const [a, b, c] = condition;
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                console.log(`${currentPlayer.name} wins!`);
                 gameOver = true;
-                return;
+                return `${currentPlayer.name} wins!`;
             }
         }
 
         if (!board.includes("")) {
-            console.log("It's a draw!");
             gameOver = true;
+            return "It's a draw!";
         }
+        return null;
     }
     
     return {
@@ -65,11 +65,12 @@ const gameFlow = (function () {
             if (gameOver) return;
 
             Gameboard.placeMarker(index, currentPlayer.marker);
-            checkWinner();
+            let result = checkWinner();
 
             if (!gameOver) {
                 switchPlayer();
             }
+            return result;
         },
 
         resetGame: () => {
@@ -83,10 +84,15 @@ const gameFlow = (function () {
 
 const displayController = (function () {
     const container = document.querySelector('.container');
+    const message = document.querySelector('.message');
+
     container.addEventListener("click", (e) => {
         let index = parseInt(e.target.id);
-        gameFlow.playRound(index);
-        console.log(e.target.id);
+        let result = gameFlow.playRound(index);
         e.target.textContent = Gameboard.getBoard()[index];
+
+        if (result) {
+            message.textContent = result;
+        }
 });
 })();
