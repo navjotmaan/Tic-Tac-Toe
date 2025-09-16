@@ -32,17 +32,51 @@ const gameFlow = (function () {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
     }
 
-    function checkWinner() {}
+    function checkWinner() {
+        const board = Gameboard.getBoard();
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                console.log(`${currentPlayer.name} wins!`);
+                gameOver = true;
+                return;
+            }
+        }
+
+        if (!board.includes("")) {
+            console.log("It's a draw!");
+            gameOver = true;
+        }
+    }
     
     return {
         playRound: (index) => {
             if (gameOver) return;
 
             Gameboard.placeMarker(index, currentPlayer.marker);
+            checkWinner();
 
             if (!gameOver) {
                 switchPlayer();
             }
+        },
+
+        resetGame: () => {
+            Gameboard.resetBoard();
+            currentPlayer = player1;
+            gameOver = false;
         }
+
     }
 })();
