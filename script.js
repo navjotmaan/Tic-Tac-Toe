@@ -14,7 +14,7 @@ const Gameboard = (function () {
     }
 })();
 
-function createPlayer(name, marker, active) {
+function createPlayer(name, marker) {
     return {
         name: name,
         marker: marker,
@@ -79,4 +79,14 @@ const gameFlow = (function () {
         }
 
     }
+})();
+
+const displayController = (function () {
+    const container = document.querySelector('.container');
+    container.addEventListener("click", (e) => {
+        let index = parseInt(e.target.id);
+        gameFlow.playRound(index);
+        console.log(e.target.id);
+        e.target.textContent = Gameboard.getBoard()[index];
+});
 })();
