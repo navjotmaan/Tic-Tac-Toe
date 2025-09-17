@@ -21,11 +21,8 @@ function createPlayer(name, marker) {
     };
 }
 
-const player1 = createPlayer('player X', 'X');
-const player2 = createPlayer('player O', 'O');
-
 const gameFlow = (function () {
-    let currentPlayer = player1;
+    let player1, player2, currentPlayer ;
     let gameOver = false;
 
     function switchPlayer() {
@@ -61,6 +58,14 @@ const gameFlow = (function () {
     }
     
     return {
+        startGame: (p1, p2) => {
+            player1 = p1;
+            player2 = p2;
+            currentPlayer = player1;
+            gameOver = false;
+            Gameboard.resetBoard();
+        },
+
         playRound: (index) => {
             if (gameOver) return;
 
@@ -85,21 +90,48 @@ const gameFlow = (function () {
 const displayController = (function () {
     const container = document.querySelector('.container');
     const message = document.querySelector('.message');
+    const form = document.querySelector('#player-form');
+    const resetBtn = document.querySelector('#reset');
+    const cells = document.querySelectorAll('.container div');
+
+    let playersSet = false;
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const p1Name = document.querySelector('#player1Name').value || 'Player 1';
+        const p2Name = document.querySelector('#player2Name').value || 'Player 2';
+
+        const player1 = createPlayer(p1Name, 'X');
+        const player2 = createPlayer(p2Name, 'O');
+
+        gameFlow.startGame(player1, player2);
+        p1Name.textContent = "";
+        playersSet = true;
+        message.textContent = `Game started! ${p1Name} vs ${p2Name}`;
+    });
 
     container.addEventListener("click", (e) => {
+        if (!playersSet) return;
         let index = parseInt(e.target.id);
+
         let result = gameFlow.playRound(index);
         e.target.textContent = Gameboard.getBoard()[index];
 
         if (result) {
             message.textContent = result;
         }
-});
+    });
 
-    const resetBtn = document.querySelector('#reset');
-    const cells = document.querySelectorAll('.container div');
     resetBtn.addEventListener("click", () => {
         gameFlow.resetGame();
         cells.forEach(cell => cell.textContent = "");
+        message.textContent = "";
+
+        document.querySelector('#player1Name').value = "";
+        document.querySelector('#player2Name').value = "";
+
+        playersSet = false;
     });
+
 })();
