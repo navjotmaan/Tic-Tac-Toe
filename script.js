@@ -95,4 +95,11 @@ const displayController = (function () {
             message.textContent = result;
         }
 });
+
+    const resetBtn = document.querySelector('#reset');
+    const cells = document.querySelectorAll('.container div');
+    resetBtn.addEventListener("click", () => {
+        gameFlow.resetGame();
+        cells.forEach(cell => cell.textContent = "");
+    });
 })();
