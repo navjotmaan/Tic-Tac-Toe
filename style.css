@@ -1,18 +1,22 @@
 body {
     text-align: center;
-    font-family: cursive;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf0d5;
 }
 
 .container {
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-template-rows: 100px 100px 100px;
-    gap: 5px;
+    gap: 1px;
+    margin: 50px 450px;
 }
 
 .container > div {
-    background-color: cadetblue;
+    background-color: #003049;
+    color: aliceblue;
     border: none;
     border-radius: 5px;
     font-size: 50px;
+    padding: 5px;
 }
