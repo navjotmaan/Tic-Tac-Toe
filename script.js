@@ -121,6 +121,9 @@ const displayController = (function () {
 
     container.addEventListener("click", (e) => {
         if (!playersSet) return;
+
+        if (!e.target.id) return;
+        
         let index = parseInt(e.target.id);
 
         let result = gameFlow.playRound(index);
