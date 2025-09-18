@@ -88,16 +88,25 @@ const gameFlow = (function () {
 })();
 
 const displayController = (function () {
+    
+    const gameStart = document.querySelector('#game-start');
+    const gameResult = document.querySelector('#game-result');
     const container = document.querySelector('.container');
     const message = document.querySelector('.message');
     const form = document.querySelector('#player-form');
     const resetBtn = document.querySelector('#reset');
     const cells = document.querySelectorAll('.container div');
+    const gameBattle = document.querySelector('#game-battle');
 
     let playersSet = false;
 
+    document.addEventListener('DOMContentLoaded', () => {
+         gameStart.showModal();
+    });
+
     form.addEventListener("submit", (e) => {
         e.preventDefault();
+        gameStart.close();
 
         const p1Name = document.querySelector('#player1Name').value || 'Player 1';
         const p2Name = document.querySelector('#player2Name').value || 'Player 2';
@@ -106,9 +115,8 @@ const displayController = (function () {
         const player2 = createPlayer(p2Name, 'O');
 
         gameFlow.startGame(player1, player2);
-        p1Name.textContent = "";
         playersSet = true;
-        message.textContent = `Game started! ${p1Name} vs ${p2Name}`;
+        gameBattle.textContent = `Game started! ${p1Name} vs ${p2Name}`;
     });
 
     container.addEventListener("click", (e) => {
@@ -120,10 +128,12 @@ const displayController = (function () {
 
         if (result) {
             message.textContent = result;
+            gameResult.showModal();
         }
     });
 
     resetBtn.addEventListener("click", () => {
+        gameResult.close();
         gameFlow.resetGame();
         cells.forEach(cell => cell.textContent = "");
         message.textContent = "";
@@ -132,6 +142,7 @@ const displayController = (function () {
         document.querySelector('#player2Name').value = "";
 
         playersSet = false;
+        gameStart.showModal();
     });
 
 })();
