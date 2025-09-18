@@ -9,7 +9,7 @@ body {
     grid-template-columns: 100px 100px 100px;
     grid-template-rows: 100px 100px 100px;
     gap: 1px;
-    margin: 50px 450px;
+    margin: 50px 470px;
 }
 
 .container > div {
@@ -19,4 +19,41 @@ body {
     border-radius: 5px;
     font-size: 50px;
     padding: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#game-start, #game-result {
+    background-color: #f77f00;
+    color: aliceblue;
+    padding: 50px 80px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#reset, #start {
+    margin-top: 20px;
+    background-color: #d62828;
+    color: aliceblue;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#reset:hover, #start:hover {
+    background-color: #780000;
+    cursor: pointer;
+}
+
+#game-start::backdrop,
+#game-result::backdrop {
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.4);
 }
