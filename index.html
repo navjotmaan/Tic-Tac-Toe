@@ -9,13 +9,15 @@
 <body>
     <h1>Tic Tac Toe</h1>
 
-    <form id="player-form">
-        <input type="text" id="player1Name" placeholder="Player 1 Name">
-        <input type="text" id="player2Name" placeholder="Player 2 Name">
-        <button type="submit">Start Game</button>
-    </form>
+    <dialog id="game-start">
+        <form method="dialog" id="player-form">
+            <label>Player 1: <input type="text" id="player1Name" required></label>
+            <label>Player 2: <input type="text" id="player2Name" required></label>
+            <button type="submit">Start Game</button>
+        </form>
+    </dialog>
 
-    <div class="message"></div>
+    <p id="game-battle"></p>
 
     <div class="container">
         <div id="0"></div>
@@ -29,7 +31,10 @@
         <div id="8"></div>
     </div>
 
-    <button id="reset">Reset</button>
+    <dialog id="game-result">
+        <div class="message"></div>
+        <button id="reset">Reset</button>
+    </dialog>
 
     <script src="script.js"></script>
 </body>
